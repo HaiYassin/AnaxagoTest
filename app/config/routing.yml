@@ -1,6 +1,6 @@
-anaxago_core:
-    resource: "@AnaxagoCoreBundle/Resources/config/routing.yml"
-    prefix:   /
+controllers:
+    resource: '../src/Anaxago/CoreBundle/Controller/'
+    type:     annotation
 
 login:
     path: /login
