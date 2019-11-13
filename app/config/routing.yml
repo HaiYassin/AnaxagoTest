@@ -1,5 +1,9 @@
-controllers:
-    resource: '../src/Anaxago/CoreBundle/Controller/'
+anaxago_core:
+    resource: "@AnaxagoCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ApiController:
+    resource: '../src/Anaxago/CoreBundle/Controller/ApiController.php'
     type:     annotation
 
 login:
