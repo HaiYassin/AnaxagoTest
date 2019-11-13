@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="project")
  * @ORM\Entity(repositoryClass="Anaxago\CoreBundle\Repository\ProjectRepository")
  */
-class Project
+class Project implements \JsonSerializable
 {
     /**
      * @var int
@@ -124,5 +124,29 @@ class Project
     {
         return $this->description;
     }
-}
 
+    /**
+     * Get an array with object property.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'slug' => $this->getTitle(),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription()
+        );
+    }
+
+    /**
+     * jsonSerialize for Project Entity.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+}
