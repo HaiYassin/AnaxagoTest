@@ -7,21 +7,20 @@ namespace Anaxago\CoreBundle\Controller;
 use Anaxago\CoreBundle\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiController
  *
- * @Route("/api", name="api")
+ * @Route("/api", name="api_")
  */
 class ApiController extends Controller
 {
     /**
      * @Route(
      *      "/projects",
-     *      name="api_projects_list",
+     *      name="projects_list",
      *      methods={"GET"}
      *     )
      *
@@ -29,7 +28,7 @@ class ApiController extends Controller
      *
      * @return Response
      */
-    public function listProjectsAction(EntityManagerInterface $entityManager)
+    public function projectsListAction(EntityManagerInterface $entityManager)
     {
         $projects = $entityManager->getRepository(Project::class)->findAll();
 
