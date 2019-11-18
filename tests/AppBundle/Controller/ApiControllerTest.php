@@ -3,6 +3,7 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiControllerTest
@@ -21,7 +22,7 @@ class ApiControllerTest extends WebTestCase
         $responseContent = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertCount(2, $responseContent);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $this->assertArrayHasKey('data', $responseContent);
         $this->assertNotEmpty($responseContent['data']);
         $this->assertCount(3, $responseContent['data']);
@@ -35,5 +36,24 @@ class ApiControllerTest extends WebTestCase
             $this->assertArrayHasKey('state', $project);
             $this->assertArrayHasKey('user', $project);
         }
+    }
+
+    public function testGetInvestmentProjectSimulationMinimumAnnualInterestRate()
+    {
+        $client = static::createClient();
+
+        //TODO SIMULATE AN AUTHENTIFICATION WITH ROLE_USER
+
+        $parameters = array();
+
+        $crawler = $client->request(
+            'POST',
+            $client->getContainer()->get('router')->generate('api_investment_project_simulation_min_annual_interest_rate'),
+            array(
+                $parameters
+            )
+        );
+
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 }
