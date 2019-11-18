@@ -79,9 +79,26 @@ class User implements UserInterface
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Anaxago\CoreBundle\Entity\Project", mappedBy="user", indexBy="id")
+     * @ORM\ManyToMany(targetEntity="Anaxago\CoreBundle\Entity\Project", mappedBy="user", indexBy="id")
      */
     private $projects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Anaxago\CoreBundle\Entity\InvestmentProjectSimulation", mappedBy="user")
+     */
+    private $investmentProjectsSimulation;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Anaxago\CoreBundle\Entity\ProjectMarkInterest", inversedBy="projects", orphanRemoval=true)
+     */
+    private $interestedMark;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+        $this->investmentProjectsSimulation = new ArrayCollection();
+        $this->interestedMark = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -314,6 +331,52 @@ class User implements UserInterface
     {
         if ($this->projects->contains($project)) {
             $this->projects->removeElement($project);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a investmentProjectSimulation to the InvestmentProjectSimulation ArrayCollection
+     *
+     * @param InvestmentProjectSimulation $investmentProjectSimulation
+     * @return User
+     */
+    public function addInvestmentProjectSimulation(InvestmentProjectSimulation $investmentProjectSimulation)
+    {
+        if (!$this->investmentProjectsSimulation->contains($investmentProjectSimulation)) {
+            $this->investmentProjectsSimulation->add($investmentProjectSimulation);
+            $investmentProjectSimulation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a investmentProjectSimulation from the InvestmentProjectSimulation ArrayCollection
+     *
+     * @param InvestmentProjectSimulation $investmentProjectSimulation
+     * @return User
+     */
+    public function removeInvestmentProjectSimulation(InvestmentProjectSimulation $investmentProjectSimulation)
+    {
+        if ($this->investmentProjectsSimulation->contains($investmentProjectSimulation)) {
+            $this->investmentProjectsSimulation->removeElement($investmentProjectSimulation);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param ProjectMarkInterest $projectMarkInterest
+     *
+     * @return User
+     */
+    public function addProjectMarkInterest(ProjectMarkInterest $projectMarkInterest)
+    {
+        if (!$this->interestedMark->contains($projectMarkInterest)) {
+            $this->interestedMark->add($projectMarkInterest);
         }
 
         return $this;

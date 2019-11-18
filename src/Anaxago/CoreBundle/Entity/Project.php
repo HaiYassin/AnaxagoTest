@@ -60,6 +60,19 @@ class Project implements \JsonSerializable
     private $user;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Anaxago\CoreBundle\Entity\ProjectMarkInterest", inversedBy="projects", orphanRemoval=true)
+     */
+    private $interestedMark;
+
+    /**
+     * Project constructor.
+     */
+    public function __construct()
+    {
+        $this->interestedMark = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -190,7 +203,21 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Get an array with object property.
+     * @param ProjectMarkInterest $projectMarkInterest
+     *
+     * @return Project
+     */
+    public function addProjectMarkInterest(ProjectMarkInterest $projectMarkInterest)
+    {
+        if (!$this->interestedMark->contains($projectMarkInterest)) {
+            $this->interestedMark->add($projectMarkInterest);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get an array with object properties
      *
      * @return array
      */
