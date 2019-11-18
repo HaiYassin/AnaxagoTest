@@ -30,3 +30,19 @@ La connexion et l'enregistrement des utilisateurs sont déjà configurés et op�
 
     - Script personnalisé permet de créer la base de données, de lancer la création du schéma et de précharger les données
     - Ce script peut être réutilisé pour ré-initialiser la base de données à son état initial à tout moment
+
+Lancer les tests : 
+Se placer sur le repertoire du projet et faire :
+```vendor\bin\simple-phpunit```
+
+Pour aller plus loin : 
+- Utiliser Docker.
+- Dissocier les tests unitaires aux fonctionnels. 
+- Utiliser les migrations.
+- Pour l'api simplifié utilisé ApiPlatform, car FosRestBundle est déprécié.
+- Système de Workflow, pour gérer les states des Projects au Flush avec WorkflowComponent de SensioLab.
+
+Test des requêtes de l'api avec Postman :
+url : https://www.getpostman.com/
+
+
