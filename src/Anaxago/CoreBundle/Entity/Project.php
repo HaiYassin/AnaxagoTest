@@ -2,6 +2,7 @@
 
 namespace Anaxago\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,11 @@ class Project implements \JsonSerializable
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Anaxago\CoreBundle\Entity\User", inversedBy="projects")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    private $user;
 
     /**
      * Get id
@@ -126,6 +132,30 @@ class Project implements \JsonSerializable
     }
 
     /**
+     * Get User attached to this project
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set User
+     *
+     * @param User $user
+     *
+     * @return Project
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * Get an array with object property.
      *
      * @return array
@@ -136,7 +166,8 @@ class Project implements \JsonSerializable
             'id' => $this->getId(),
             'slug' => $this->getTitle(),
             'title' => $this->getTitle(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'user' => $this->getUser()
         );
     }
 

@@ -8,6 +8,7 @@
 
 namespace Anaxago\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -74,6 +75,13 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $email;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Anaxago\CoreBundle\Entity\Project", mappedBy="user", indexBy="id")
+     */
+    private $projects;
 
     /**
      * @return int
@@ -276,5 +284,38 @@ class User implements UserInterface
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
+    }
+
+    /**
+     * Add a project to the Project ArrayCollection
+     *
+     * @param Project $project
+     *
+     * @return User
+     */
+    public function addProject(Project $project)
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a project from the Project ArrayCollection
+     *
+     * @param Project $project
+     *
+     * @return User
+     */
+    public function removeProject(Project $project)
+    {
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+        }
+
+        return $this;
     }
 }
