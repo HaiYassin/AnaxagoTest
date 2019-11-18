@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Project implements \JsonSerializable
 {
+    CONST FUNDED_PROJECT = 'financé';
+    CONST NOT_FUNDED_PROJECT = 'non-financé';
+
     /**
      * @var int
      *
@@ -42,6 +45,13 @@ class Project implements \JsonSerializable
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="string")
+     */
+    private $state = self::NOT_FUNDED_PROJECT;
 
     /**
      * @ORM\ManyToOne(targetEntity="Anaxago\CoreBundle\Entity\User", inversedBy="projects")
@@ -132,6 +142,30 @@ class Project implements \JsonSerializable
     }
 
     /**
+     * Get State
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set State
+     *
+     * @param string $state
+     *
+     * @return Project
+     */
+    public function setState(string $state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
      * Get User attached to this project
      *
      * @return User
@@ -167,6 +201,7 @@ class Project implements \JsonSerializable
             'slug' => $this->getTitle(),
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
+            'state' => $this->getState(),
             'user' => $this->getUser()
         );
     }
