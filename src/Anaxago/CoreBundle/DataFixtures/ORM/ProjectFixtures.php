@@ -30,7 +30,9 @@ class ProjectFixtures extends Fixture
             $projectToPersist = (new Project())
                 ->setTitle($project['name'])
                 ->setDescription($project['description'])
-                ->setSlug($project['slug']);
+                ->setSlug($project['slug'])
+                ->setState(Project::NOT_FUNDED_PROJECT);
+
             $manager->persist($projectToPersist);
         }
         $manager->flush();

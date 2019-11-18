@@ -51,7 +51,7 @@ class Project implements \JsonSerializable
      *
      * @ORM\Column(name="state", type="string")
      */
-    private $state = self::NOT_FUNDED_PROJECT;
+    private $state = Project::NOT_FUNDED_PROJECT;
 
     /**
      * @ORM\ManyToOne(targetEntity="Anaxago\CoreBundle\Entity\User", inversedBy="projects")
