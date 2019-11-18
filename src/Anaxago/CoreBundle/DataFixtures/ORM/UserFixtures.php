@@ -21,12 +21,28 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $investor = self::getUserInvestor();
+        $admin = self::getUserInvestor();
+
+        $manager->persist($investor);
+        $manager->persist($admin);
+
+        $manager->flush();
+    }
+
+    public static function getUserInvestor()
+    {
         $investor = (new User())
             ->setFirstName('John')
             ->setLastName('Doe')
             ->setEmail('john@local.com')
             ->setPlainPassword('john');
 
+        return $investor;
+    }
+
+    public static function getUserAdmin()
+    {
         $admin = (new User())
             ->setFirstName('admin')
             ->setLastName('anaxago')
@@ -36,9 +52,6 @@ class UserFixtures extends Fixture
             ->addRoles('ROLE_ADMIN')
         ;
 
-        $manager->persist($investor);
-        $manager->persist($admin);
-
-        $manager->flush();
+        return $admin;
     }
 }
