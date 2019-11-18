@@ -1,1 +1,12 @@
 services:
+  Anaxago\CoreBundle\Services\InterestRateCalculationService:
+    class: Anaxago\CoreBundle\Services\InterestRateCalculationService
+    autowire: true
+
+  Anaxago\CoreBundle\Services\InvestmentProjectSimulationService:
+    class: Anaxago\CoreBundle\Services\InvestmentProjectSimulationService
+    autowire: true
+
+  Anaxago\CoreBundle\Services\ProjectMarkInterestService:
+    class: Anaxago\CoreBundle\Services\ProjectMarkInterestService
+    autowire: true
